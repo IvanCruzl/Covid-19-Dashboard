@@ -267,6 +267,7 @@ with tab2:
         st.markdown("""
         <div style="background-color: transparent; border: solid 2px #DEDB3E; padding: 15px; border-radius: 10px; margin-top: 60px;">
             <p style="font-size: 14px;">En esta gráfica se observan varios volúmenes de casos y de muertes, desde el estado de Wyoming, hasta Nueva York, lo que nos puede dar una idea en proporción como le fue en esos 6 meses a cada uno de los estados. Se puede notar como Nueva York tiene un volumen en proporción a los casos confirmados un poco más grande que el resto de los estados.</p>
+            <p style="font-size: 12px;">* Se reciben como parámetros los el dataframe, los estados y los valores numéricos de las muertes y los casos confirmados*</p>
         </div>
         """, unsafe_allow_html=True)
 
