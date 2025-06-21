@@ -16,11 +16,12 @@ st.title("COVID-19 en Estados Unidos")
 
 
 # Cargar datos
-try:
-    df = pd.read_csv("us_covid_data2 (2).csv")
-except FileNotFoundError:
-    st.error("⚠️ No se encontró el archivo 'us_covid_data.csv'. Asegúrate de que esté en la misma carpeta.")
-    st.stop()
+df = pd.read_csv("us_covid_data2 (2).csv")
+#try:
+ #   df = pd.read_csv("us_covid_data2 (2).csv")
+#except FileNotFoundError:
+ #   st.error("⚠️ No se encontró el archivo 'us_covid_data.csv'. Asegúrate de que esté en la misma carpeta.")
+  #  st.stop()
 
 # Procesamiento inicial
 df['date'] = pd.to_datetime(df['date'])
