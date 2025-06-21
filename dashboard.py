@@ -145,7 +145,7 @@ with tab1:
         st.markdown("""
         <div style="background-color: transparent; border: 2px solid #DE4D3E; padding: 15px; border-radius: 10px; margin-top: 60px;">
             <p style="font-size: 14px;">Este mapa interactivo representa el impacto territorial de la pandemia de COVID-19 en Estados Unidos, mostrando la distribución geográfica de las muertes confirmadas en cada estado a lo largo de la crisis sanitaria.</p>
-            <p style="font-size: 14px;">* Se pueden utilizar los filtros de la barra lateral para seleccionar estados o rango de fechas *</p>
+            <p style="font-size: 12px;">* Se pueden utilizar los filtros de la barra lateral para seleccionar estados o rango de fechas *</p>
         </div>
         """, unsafe_allow_html=True)
 
