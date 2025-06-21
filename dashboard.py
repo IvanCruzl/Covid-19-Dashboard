@@ -349,7 +349,7 @@ with tab4:
             log_x=True,
             log_y=True,
             template="plotly_dark",
-            labels={'cases': 'Casos', 'deaths': 'Muertes'}
+            labels={'cases': 'Casos', 'deaths': 'Muertes', 'state':'Estado'}
         )
         st.plotly_chart(fig, use_container_width=True)
         st.caption("""
