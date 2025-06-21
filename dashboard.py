@@ -4,7 +4,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 st.set_page_config(
-    page_title="Dashboard COVID-19 USA",
+    page_title="Dashboard COVID-19 USA!",
     page_icon="🦠",
     layout="wide",
     initial_sidebar_state="expanded"
