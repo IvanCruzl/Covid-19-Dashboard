@@ -274,11 +274,21 @@ with tab2:
 with tab3:
     st.subheader("Evolución temporal")
     st.markdown("""
-        <div style="background-color: transparent; border: solid 2px #FF4B4B; padding: 15px; border-radius: 10px; margin-top: 10px; margin-bottom: 20px;">
-            <p style="font-size: 18px;">En este apartado se muestra la evolución en el timpo de los casos y muertes ocasionados por el COVID-19 desde el 1 de Julio del 2020 hasta el 5 de diciembre del 2020</p>
-        </div>
-        """, unsafe_allow_html=True)
-    st.write("")
+    <div style="background-color: transparent; border: solid 2px #FF4B4B; padding: 15px; border-radius: 10px; margin-top: 10px; margin-bottom: 20px;">
+        <p style="font-size: 18px;">
+            En este apartado se muestra la evolución en el tiempo de los casos y muertes ocasionados por el COVID-19 
+            <span style="font-weight: bold; color: #FF4B4B;">desde el 1 de julio del 2020 hasta el 5 de diciembre del 2020</span>.
+        </p>
+        <p style="font-size: 18px;">
+            Se nota cómo hay un 
+            <span style="font-weight: bold; color: #FF4B4B;">ligero aceleramiento en la cantidad de casos confirmados</span> 
+            a partir del mes de 
+            <span style="font-weight: bold; color: #FF4B4B;">noviembre</span>, lo que puede indicar que, gracias a los 
+            <span style="font-weight: bold; color: #FF4B4B;">climas más extremos</span>, se hizo una propagación más rápida.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
 
 
     st.markdown("**Casos y muertes por día**")
