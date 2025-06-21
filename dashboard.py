@@ -357,5 +357,11 @@ with tab4:
         """)
 
 st.markdown("---")
-st.markdown("Created by Ivan Cruz")
+st.markdown("""
+<div style="display: flex; align-items: center; margin-bottom: 10px;">
+    <img src="https://media.licdn.com/dms/image/v2/D4E03AQGD6y3GMhKpGg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1701370531159?e=2147483647&v=beta&t=EJfVA3ZMLGxiUwhIf_i2JUtGC9e64Hte2rWAU25eIF8" 
+         style="border-radius: 50%; width: 50px; height: 50px; object-fit: cover; margin-right: 10px;">
+    <span>Created by Ivan Cruz</span>
+</div>
+""", unsafe_allow_html=True)
 
