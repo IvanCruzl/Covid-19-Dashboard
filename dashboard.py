@@ -331,24 +331,20 @@ with tab4:
         fig.update_layout(yaxis_tickformat=".2%",showlegend=False)
         st.plotly_chart(fig, use_container_width=True)
         st.caption("""
-        Muestra el porcentaje de fallecimientos respecto al total de casos confirmados por estado. 
-        Los valores más altos indican mayores tasas de mortalidad. 
+        muestra el porcentaje de fallecimientos en relación con los casos confirmados de COVID-19 en cada estado. Los estados se ordenan de mayor a menor tasa de letalidad
         """)
 
     with col2:
         st.markdown("**Relación entre casos y muertes por estado (Top 10 destacados)**")
 
-        # Obtener los 10 estados con mayor suma de casos + muertes para destacarlos
         scatter_df = filtered_df.groupby("state")[["cases", "deaths"]].sum().reset_index()
         scatter_df['total_impact'] = scatter_df['cases'] + scatter_df['deaths']
         top_states = scatter_df.nlargest(10, 'total_impact')['state'].tolist()
         
-        # Crear columna para el color: los top 10 tendrán color, los demás gris
         scatter_df['color_group'] = scatter_df['state'].apply(
             lambda x: x if x in top_states else 'Otros estados'
         )
         
-        # Ordenar para que los top 10 aparezcan primero en la leyenda
         scatter_df = scatter_df.sort_values(by='color_group', ascending=False)
         
         fig = px.scatter(
@@ -367,12 +363,11 @@ with tab4:
                 'color_group': 'Estado'
             },
             color_discrete_map={
-                'Otros estados': 'rgba(150, 150, 150, 0.3)'  # Gris claro para los no top 10
+                'Otros estados': 'rgba(150, 150, 150, 0.3)' 
             },
             category_orders={"color_group": top_states + ['Otros estados']}
         )
         
-        # Personalización adicional
         fig.update_traces(
             marker=dict(line=dict(width=0.5, color='DarkSlateGray')),
             selector=({'marker.color': 'rgba(150, 150, 150, 0.3)'})
