@@ -97,13 +97,14 @@ tab1, tab2, tab3, tab4 = st.tabs(["Mapas", "Barras y Áreas", "Tendencia Tempora
 with tab1:
     st.subheader("Visualización geográfica")
     st.markdown("""
-    <div style="background-color: transparent; border: 2px solid #DE4D3E; padding: 15px; border-radius: 10px; margin-top: 60px;">
-        <p style="font-size: 14px;">
+    <div style="background-color: transparent; border: 2px solid #DE4D3E; padding: 20px; border-radius: 12px; margin-top: 60px;">
+        <p style="font-size: 20px;">
             Al ver el contraste entre los casos y las muertes, se puede calcular una tasa de mortalidad alta de 
-            <span style="color: #DE4D3E; font-weight: bold; font-size: 16px;">aproximadamente 3%</span> en solo 6 meses.
+            <span style="color: #DE4D3E; font-weight: bold; font-size: 22px;">aproximadamente 3%</span> en solo 6 meses.
         </p>
     </div>
     """, unsafe_allow_html=True)
+
     
     st.markdown("**Casos por estado**")
     col1, col2 = st.columns([3, 1]) 
