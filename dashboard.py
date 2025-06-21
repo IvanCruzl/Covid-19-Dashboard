@@ -135,7 +135,8 @@ with tab1:
             color="deaths",
             color_continuous_scale="Reds",
             scope="usa",
-            template="plotly_dark"
+            template="plotly_dark",
+            labels={"state_abbr": "Estado", "deaths": "Muertes"}
         )
     
         st.plotly_chart(fig, use_container_width=True)
