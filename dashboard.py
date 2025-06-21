@@ -298,7 +298,7 @@ with tab3:
              range_y=[0, df_top['cumulative_deaths'].max() * 1.1],
              template='plotly_dark',
              color_discrete_sequence=['#63DE3E'],
-             labels = {'cumulativa_deaths': 'Muertes totales','state':'Estados'},
+             labels = {'cumulative_deaths': 'Muertes totales','state':'Estados','date':'Fecha'},
              text_auto=True,
              )
 
