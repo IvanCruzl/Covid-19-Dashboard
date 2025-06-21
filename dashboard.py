@@ -4,7 +4,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 st.set_page_config(
-    page_title="Dashboard COVID-19 USA!",
+    page_title="Dashboard COVID-19 USA",
     page_icon="🦠",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -216,8 +216,8 @@ with tab2:
         st.markdown("""
         <div style="background-color: transparent; border: 2px solid #8CB370; padding: 15px; border-radius: 10px; margin-top: 60px;">
             <p style="font-size: 14px;">Gráfico de dona muestra la distribución de casos entre los {top_n} estados más afectados.</p>
-            <p style="font-size: 14px;">El estado con más casos aparece ligeramente destacado.</p>
-            <p style="font-size: 14px;">En el centro se muestra el total acumulado de casos para estos estados.</p>
+            <p style="font-size: 14px;">Con esta información podemos determinar que los 5 estados de los que representan el top 10 con más casos ocupan prácticamente el 75% de los datos, esto puede ser explicado ya que estos estados tienen en general mayor densidad de población.p>
+            <p style="font-size: 12px;">* Se reciben como parámetros los el dataframe, los estados y los casos *</p>
         </div>
         """.format(top_n=top_n), unsafe_allow_html=True)
     
@@ -266,7 +266,7 @@ with tab2:
     with col4:
         st.markdown("""
         <div style="background-color: transparent; border: solid 2px #DEDB3E; padding: 15px; border-radius: 10px; margin-top: 60px;">
-            <p style="font-size: 14px;">Gráfico de barras apiladas que compara casos confirmados y muertes por estado.</p>
+            <p style="font-size: 14px;">En esta gráfica se observan varios volúmenes de casos y de muertes, desde el estado de Wyoming, hasta Nueva York, lo que nos puede dar una idea en proporción como le fue en esos 6 meses a cada uno de los estados. Se puede notar como Nueva York tiene un volumen en proporción a los casos confirmados un poco más grande que el resto de los estados.</p>
         </div>
         """, unsafe_allow_html=True)
 
