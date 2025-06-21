@@ -3,7 +3,6 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
-# Configuración de la página
 st.set_page_config(
     page_title="Dashboard COVID-19 USA",
     page_icon="🦠",
@@ -11,40 +10,31 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Título del dashboard
 st.title("COVID-19 en Estados Unidos")
 
 
 import pandas as pd
 import streamlit as st
 
-# Cargar datos
 try:
-    df = pd.read_csv("us_covid_data2 (2).csv")  # Intenta en el directorio actual
+    df = pd.read_csv("us_covid_data2 (2).csv")
 except FileNotFoundError:
     try:
-        # Usa la URL RAW de GitHub
         github_url = "https://raw.githubusercontent.com/IvanCruzl/Covid-19-Dashboard/main/us_covid_data.csv"
         df = pd.read_csv(github_url)
     except Exception as e:
-        st.error(f"⚠️ Error al cargar datos: {str(e)}")
-        st.stop()  # Detiene la ejecución si no hay datos
+        st.error(f"Error al cargar datos: {str(e)}")
+        st.stop()  
 
-# Solo procesar si df existe
 if 'df' in locals():
-    # Procesamiento inicial
     df['date'] = pd.to_datetime(df['date'])
     df['mortality'] = df['deaths'] / df['cases']
-    
-    # Resto de tu código...
 else:
     st.warning("No se pudo cargar el DataFrame. Verifica la fuente de datos.")
 
-# Procesamiento inicial
 df['date'] = pd.to_datetime(df['date'])
 df['mortality'] = df['deaths'] / df['cases']
 
-# Diccionario de nombre completo a abreviación
 state_abbrev = {
     'Alabama': 'AL', 'Alaska': 'AK', 'Arizona': 'AZ', 'Arkansas': 'AR',
     'California': 'CA', 'Colorado': 'CO', 'Connecticut': 'CT',
@@ -63,7 +53,6 @@ state_abbrev = {
     'Wisconsin': 'WI', 'Wyoming': 'WY'
 }
 
-# Agrega la abreviación
 df['state_abbr'] = df['state'].map(state_abbrev)
 
 territorios = ['District of Columbia', 'Puerto Rico', 'Virgin Islands', 'Guam', 'Northern Mariana Islands']
@@ -71,12 +60,10 @@ territorios = ['District of Columbia', 'Puerto Rico', 'Virgin Islands', 'Guam', 
 df = df[~df['state'].isin(territorios)]
 
 
-# Verifica si hay estados no reconocidos
 missing_states = df[df['state_abbr'].isna()]['state'].unique()
 if len(missing_states) > 0:
     st.warning(f"Estados no reconocidos: {missing_states}")
 
-# Sidebar con filtros
 st.sidebar.header("Filtros")
 min_date = df['date'].min()
 max_date = df['date'].max()
@@ -91,12 +78,10 @@ all_states = df['state'].unique()
 selected_states = st.sidebar.multiselect("Seleccionar estados", all_states, default=["New York", "California"])
 top_n = st.sidebar.slider("Top N estados", 2, 12, 6)
 
-# Aplicar filtros
 filtered_df = df[(df['date'] >= start_date) & (df['date'] <= end_date)]
 if selected_states:
     filtered_df = filtered_df[filtered_df['state'].isin(selected_states)]
 
-# Métricas generales
 st.subheader("Métricas generales")
 col1, col2, col3 = st.columns(3)
 total_cases = filtered_df['cases'].sum()
@@ -107,10 +92,8 @@ col1.metric("Casos totales", f"{total_cases:,}")
 col2.metric("Muertes totales", f"{total_deaths:,}")
 col3.metric("Tasa de mortalidad", f"{avg_mortality:.2%}")
 
-# Tabs
 tab1, tab2, tab3, tab4 = st.tabs(["Mapas", "Barras y Áreas", "Tendencia Temporal", "Comparativas"])
 
-# === TAB 1 ===
 with tab1:
     st.subheader("Visualización geográfica")
     
@@ -139,7 +122,6 @@ with tab1:
     
     st.write("") 
     
-    # Segundo mapa: Tasa de mortalidad
     st.markdown("**Muertes por estado**")
     col3, col4 = st.columns([3, 1])
     
@@ -168,15 +150,13 @@ with tab1:
 with tab2:
     st.subheader("Distribución por estado")
     
-    # Gráfico de donut - Top estados con más casos
     st.markdown(f"**Top {top_n} estados con más casos**")
-    col1, col2 = st.columns([3, 1])  # 3/4 para gráfico, 1/4 para descripción
+    col1, col2 = st.columns([3, 1])
     
     with col1:
         treemap_df = df.groupby("state", as_index=False)["cases"].sum()
         treemap_top = treemap_df.sort_values("cases", ascending=False).head(top_n)
 
-        # Configuración del gráfico
         pie_config = {
             "labels": treemap_top['state'],
             "values": treemap_top['cases'],
@@ -191,24 +171,22 @@ with tab2:
         
         fig = go.Figure(go.Pie(**pie_config))
 
-        # Texto central con salto de línea
         center_text = f"Total:<br>{treemap_top['cases'].sum():,}"
 
         fig.update_layout(
             template="plotly_dark",
             uniformtext_minsize=12,
             uniformtext_mode='hide',
-            # Mover la leyenda para que no tape el gráfico
             legend=dict(
                 orientation="h",
                 yanchor="top",
-                y=-0.3,  # Más abajo
+                y=-0.3,
                 xanchor="center",
                 x=0.5,
-                itemwidth=30,  # Reducir ancho de items
-                font=dict(size=10)  # Reducir tamaño de fuente
+                itemwidth=30,  
+                font=dict(size=10) 
             ),
-            margin=dict(b=100),  # Aumentar margen inferior
+            margin=dict(b=100),
             annotations=[dict(
                 text=center_text,
                 x=0.5, y=0.5,
@@ -265,7 +243,6 @@ with tab2:
                 y=1.02,
                 xanchor="right",
                 x=1,
-                # title_text=f"<b>Leyenda</b><br>Casos totales: {total_cases:,}<br>Muertes totales: {total_deaths:,}",
                 title_font_size=12,
                 font=dict(size=11)
             ),
@@ -280,12 +257,11 @@ with tab2:
         </div>
         """, unsafe_allow_html=True)
 
-# === TAB 3 ===
 with tab3:
     st.subheader("Evolución temporal")
     st.markdown("""
         <div style="background-color: transparent; border: solid 2px #FF4B4B; padding: 15px; border-radius: 10px; margin-top: 10px; margin-bottom: 20px;">
-            <p style="font-size: 18px;">En este apartado se muestra la evolución en el timpo de los casos y muertes ocasionados por el COVID-19 desde el 21 de enero del 2020 hasta el 5 de diciembre del 2020</p>
+            <p style="font-size: 18px;">En este apartado se muestra la evolución en el timpo de los casos y muertes ocasionados por el COVID-19 desde el 1 de Julio del 2020 hasta el 5 de diciembre del 2020</p>
         </div>
         """, unsafe_allow_html=True)
     st.write("")
@@ -301,9 +277,7 @@ with tab3:
     fig.update_layout(template="plotly_dark", xaxis_title="Fecha", yaxis_title="Cantidad", hovermode="x unified")
     st.plotly_chart(fig, use_container_width=True)
 
-
-    #-------------------------Grafica animada
-
+    
     st.markdown(f"**Gráfica animada 10 estados con más muertes**")
     df_state = df.groupby(['state', 'date'], as_index=False)['deaths'].sum()
     df_state['cumulative_deaths'] = df_state.groupby('state')['deaths'].cumsum()
@@ -326,16 +300,13 @@ with tab3:
              text_auto=True,
              )
 
-    # Mejorar la animación
     fig.update_traces(textposition = 'inside',textfont_size = 12)
     fig.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 250
     fig.update_layout(yaxis_title="Muertes acumuladas", showlegend = False)
 
-    # Mostrar en Streamlit
     st.plotly_chart(fig, use_container_width=True)
     
 
-# === TAB 4 ===
 with tab4:
     st.subheader("Comparativas avanzadas")
     col1, col2 = st.columns(2)
@@ -386,4 +357,5 @@ with tab4:
         """)
 
 st.markdown("---")
+st.markdown("Created by Ivan Cruz")
 
