@@ -331,7 +331,7 @@ with tab4:
         fig.update_layout(yaxis_tickformat=".2%",showlegend=False)
         st.plotly_chart(fig, use_container_width=True)
         st.caption("""
-        muestra el porcentaje de fallecimientos en relación con los casos confirmados de COVID-19 en cada estado. Los estados se ordenan de mayor a menor tasa de letalidad
+        Esta visualización muestra el porcentaje de fallecimientos en relación con los casos confirmados de COVID-19 en cada estado. Los estados se ordenan de mayor a menor tasa de letalidad
         """)
 
     with col2:
