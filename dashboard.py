@@ -116,8 +116,8 @@ with tab1:
     with col2:
         st.markdown("""
         <div style="background-color: transparent; border: 2px solid #8CB370; padding: 15px; border-radius: 10px; margin-top: 60px;">
-            <p style="font-size: 14px;">Este mapa temático proporciona una representación detallada de la incidencia acumulada de COVID-19 en los Estados Unidos, desglosada por Estado.</p>
-            <p style="font-size: 12px;">* Se pueden utilizar los filtros de la barra lateral para seleccionar estados o rango de fechas *</p>
+            <p style="font-size: 14px;">La gráfica muestra un mapa de Estados Unidos, en donde los rangos van desde los 0 hasta los 100 millones aproximadamente, siendo los estados más afectados Texas, California, Florida y Nueva York</p>
+            <p style="font-size: 12px;">* Los parámetros que recibe son el dataframe, los estados y los casos *</p>
         </div>
         """, unsafe_allow_html=True)
     
@@ -144,10 +144,20 @@ with tab1:
     with col4:
         st.markdown("""
         <div style="background-color: transparent; border: 2px solid #DE4D3E; padding: 15px; border-radius: 10px; margin-top: 60px;">
-            <p style="font-size: 14px;">Este mapa interactivo representa el impacto territorial de la pandemia de COVID-19 en Estados Unidos, mostrando la distribución geográfica de las muertes confirmadas en cada estado a lo largo de la crisis sanitaria.</p>
-            <p style="font-size: 12px;">* Se pueden utilizar los filtros de la barra lateral para seleccionar estados o rango de fechas *</p>
+            <p style="font-size: 14px;">Este mapa interactivo representa el impacto territorial de la pandemia de COVID-19 en Estados Unidos, mostrando la distribución geográfica de las muertes confirmadas en un rango de 0 a 5 millones. Los estados más afectados fueron Nueva York, Texas, California, Florida y Nueva Jersey</p>
+            <p style="font-size: 12px;">* Los parámetros que recibe son el dataframe, los estados y las muertes *</p>
         </div>
         """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div style="background-color: transparent; border: 2px solid #DE4D3E; padding: 15px; border-radius: 10px; margin-top: 60px;">
+        <p style="font-size: 14px;">
+            Al ver el contraste entre los casos y las muertes, se puede calcular una tasa de mortalidad alta de 
+            <span style="color: #DE4D3E; font-weight: bold; font-size: 16px;">aproximadamente 3%</span> en solo 6 meses.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
 
 with tab2:
     st.subheader("Distribución por estado")
