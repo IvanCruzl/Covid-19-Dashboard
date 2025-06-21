@@ -336,26 +336,61 @@ with tab4:
         """)
 
     with col2:
-        st.markdown("**Relación entre casos y muertes por estado**")
+        st.markdown("**Relación entre casos y muertes por estado (Top 10 destacados)**")
+        
         scatter_df = filtered_df.groupby("state")[["cases", "deaths"]].sum().reset_index()
-
+        scatter_df['total_impact'] = scatter_df['cases'] + scatter_df['deaths']
+        top_states = scatter_df.nlargest(10, 'total_impact')['state'].tolist()
+        
+        scatter_df['color_group'] = scatter_df['state'].apply(
+            lambda x: x if x in top_states else 'Otros estados'
+        )
+        
+        scatter_df = scatter_df.sort_values(by='color_group', ascending=False)
+        
         fig = px.scatter(
             scatter_df,
             x="cases",
             y="deaths",
-            color="state",
+            color="color_group",
             size="cases",
             hover_name="state",
             log_x=True,
             log_y=True,
             template="plotly_dark",
-            labels={'cases': 'Casos', 'deaths': 'Muertes', 'state':'Estado'}
+            labels={
+                'cases': 'Casos (escala log)',
+                'deaths': 'Muertes (escala log)',
+                'color_group': 'Estado'
+            },
+            color_discrete_map={
+                'Otros estados': 'rgba(150, 150, 150, 0.3)'  
+            },
+            category_orders={"color_group": top_states + ['Otros estados']}
         )
+        
+        fig.update_traces(
+            marker=dict(line=dict(width=0.5, color='DarkSlateGray')),
+            selector=({'marker.color': 'rgba(150, 150, 150, 0.3)'})
+        )
+        
+        fig.update_layout(
+            legend_title_text='Top 10 estados<br>por impacto total',
+            hoverlabel=dict(bgcolor="white", font_size=12),
+            legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                y=-0.5,
+                xanchor="center",
+                x=0.5
+            )
+        )
+        
         st.plotly_chart(fig, use_container_width=True)
+        
         st.caption("""
-         Comparación en escala logarítmica entre el volumen total de casos y fallecimientos. 
-        El tamaño de cada punto representa la magnitud de casos. Estados que se desvían hacia arriba de la 
-        diagonal imaginaria tienen tasas de mortalidad más altas que el promedio.
+        Comparación en escala logarítmica. Solo los 10 estados con mayor impacto (casos + muertes) se muestran con colores distintivos. 
+        El tamaño de cada punto representa el volumen de casos. Estados sobre la diagonal imaginaria tienen mayor mortalidad relativa.
         """)
 
 st.markdown("---")
