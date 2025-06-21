@@ -15,15 +15,30 @@ st.set_page_config(
 st.title("COVID-19 en Estados Unidos")
 
 
+import pandas as pd
+import streamlit as st
+
 # Cargar datos
 try:
     df = pd.read_csv("us_covid_data2 (2).csv")  # Intenta en el directorio actual
 except FileNotFoundError:
     try:
-        # Intenta con la ruta relativa desde GitHub
-        df = pd.read_csv("https://github.com/IvanCruzl/Covid-19-Dashboard/blob/main/us_covid_data.csv")
+        # Usa la URL RAW de GitHub
+        github_url = "https://raw.githubusercontent.com/IvanCruzl/Covid-19-Dashboard/main/us_covid_data.csv"
+        df = pd.read_csv(github_url)
     except Exception as e:
         st.error(f"⚠️ Error al cargar datos: {str(e)}")
+        st.stop()  # Detiene la ejecución si no hay datos
+
+# Solo procesar si df existe
+if 'df' in locals():
+    # Procesamiento inicial
+    df['date'] = pd.to_datetime(df['date'])
+    df['mortality'] = df['deaths'] / df['cases']
+    
+    # Resto de tu código...
+else:
+    st.warning("No se pudo cargar el DataFrame. Verifica la fuente de datos.")
 
 # Procesamiento inicial
 df['date'] = pd.to_datetime(df['date'])
