@@ -75,7 +75,7 @@ start_date = pd.to_datetime(start_date)
 end_date = pd.to_datetime(end_date)
 
 all_states = df['state'].unique()
-selected_states = st.sidebar.multiselect("Seleccionar estados", all_states, default=["New York", "California, Texas"])
+selected_states = st.sidebar.multiselect("Seleccionar estados", all_states, default=["New York", "California", "Texas"])
 top_n = st.sidebar.slider("Top N estados", 2, 12, 6)
 
 filtered_df = df[(df['date'] >= start_date) & (df['date'] <= end_date)]
