@@ -75,7 +75,7 @@ start_date = pd.to_datetime(start_date)
 end_date = pd.to_datetime(end_date)
 
 all_states = df['state'].unique()
-selected_states = st.sidebar.multiselect("Seleccionar estados", all_states, default=["New York", "California"])
+selected_states = st.sidebar.multiselect("Seleccionar estados", all_states, default=["New York", "California, Texas"])
 top_n = st.sidebar.slider("Top N estados", 2, 12, 6)
 
 filtered_df = df[(df['date'] >= start_date) & (df['date'] <= end_date)]
@@ -116,7 +116,7 @@ with tab1:
     with col2:
         st.markdown("""
         <div style="background-color: transparent; border: 2px solid #8CB370; padding: 15px; border-radius: 10px; margin-top: 60px;">
-            <p style="font-size: 14px;">El mapa muestra el número total de casos por COVID-19 en cada estado de EE.UU.</p>
+            <p style="font-size: 14px;">Este mapa temático proporciona una representación detallada de la incidencia acumulada de COVID-19 en los Estados Unidos, desglosada por Estado.</p>
             <p style="font-size: 12px;">* Se pueden utilizar los filtros de la barra lateral para seleccionar estados o rango de fechas *</p>
         </div>
         """, unsafe_allow_html=True)
@@ -144,7 +144,7 @@ with tab1:
     with col4:
         st.markdown("""
         <div style="background-color: transparent; border: 2px solid #DE4D3E; padding: 15px; border-radius: 10px; margin-top: 60px;">
-            <p style="font-size: 14px;">Este mapa muestra la cantidad de mertes por COVID-19 en cada estado de EE.UU.</p>
+            <p style="font-size: 14px;">Este mapa interactivo representa el impacto territorial de la pandemia de COVID-19 en Estados Unidos, mostrando la distribución geográfica de las muertes confirmadas en cada estado a lo largo de la crisis sanitaria.</p>
             <p style="font-size: 14px;">* Se pueden utilizar los filtros de la barra lateral para seleccionar estados o rango de fechas *</p>
         </div>
         """, unsafe_allow_html=True)
