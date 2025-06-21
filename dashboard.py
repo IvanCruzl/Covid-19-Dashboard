@@ -108,7 +108,8 @@ with tab1:
             color="cases",
             color_continuous_scale="Greens",
             scope="usa",
-            template="plotly_dark"
+            template="plotly_dark",
+            labels={"state_abbr": "Estado", "cases": "Casos"}
         )
         st.plotly_chart(fig, use_container_width=True)
     
