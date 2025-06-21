@@ -338,15 +338,15 @@ with tab4:
     with col2:
         st.markdown("**Relación entre casos y muertes por estado (Top 10 destacados)**")
         
+        # Obtener los 10 estados con mayor suma de casos + muertes para destacarlos
         scatter_df = filtered_df.groupby("state")[["cases", "deaths"]].sum().reset_index()
         scatter_df['total_impact'] = scatter_df['cases'] + scatter_df['deaths']
         top_states = scatter_df.nlargest(10, 'total_impact')['state'].tolist()
         
+        # Crear columna para el color
         scatter_df['color_group'] = scatter_df['state'].apply(
             lambda x: x if x in top_states else 'Otros estados'
         )
-        
-        scatter_df = scatter_df.sort_values(by='color_group', ascending=False)
         
         fig = px.scatter(
             scatter_df,
@@ -364,35 +364,61 @@ with tab4:
                 'color_group': 'Estado'
             },
             color_discrete_map={
-                'Otros estados': 'rgba(150, 150, 150, 0.3)'  
+                'Otros estados': 'rgba(150, 150, 150, 0.5)'  # Gris semitransparente
             },
             category_orders={"color_group": top_states + ['Otros estados']}
         )
         
-        fig.update_traces(
-            marker=dict(line=dict(width=0.5, color='DarkSlateGray')),
-            selector=({'marker.color': 'rgba(150, 150, 150, 0.3)'})
-        )
-        
+        # Ajustes estéticos para el tema oscuro
         fig.update_layout(
-            legend_title_text='Top 10 estados<br>por impacto total',
-            hoverlabel=dict(bgcolor="white", font_size=12),
+            plot_bgcolor='rgba(0, 0, 0, 0)',  # Fondo transparente
+            paper_bgcolor='rgba(0, 0, 0, 0)',  # Fondo transparente
+            font=dict(color='white'),  # Texto en blanco
+            hoverlabel=dict(
+                bgcolor="#222",  # Fondo oscuro para las etiquetas hover
+                font_size=12,
+                font_family="Arial",
+                bordercolor="#444"
+            ),
             legend=dict(
+                title_font_color="white",
+                font=dict(color="white"),
                 orientation="h",
                 yanchor="bottom",
-                y=-0.5,
+                y=-0.3,
                 xanchor="center",
                 x=0.5
-            )
+            ),
+            xaxis=dict(gridcolor='rgba(100, 100, 100, 0.2)'),
+            yaxis=dict(gridcolor='rgba(100, 100, 100, 0.2)')
+        )
+        
+        # Personalización de los puntos
+        fig.update_traces(
+            marker=dict(
+                line=dict(width=0.2, color='rgba(200, 200, 200, 0.1)'),
+                opacity=0.8
+            ),
+            selector=dict(marker_color='rgba(150, 150, 150, 0.5)')
+        )
+        
+        # Añadir línea de referencia para mortalidad promedio
+        avg_mortality = scatter_df['deaths'].sum() / scatter_df['cases'].sum()
+        max_x = scatter_df['cases'].max()
+        fig.add_shape(
+            type="line",
+            x0=10, y0=10*avg_mortality,
+            x1=max_x, y1=max_x*avg_mortality,
+            line=dict(color="rgba(255, 255, 255, 0.5)", width=1, dash="dot"),
+            name="Tasa promedio"
         )
         
         st.plotly_chart(fig, use_container_width=True)
         
         st.caption("""
-        Comparación en escala logarítmica. Solo los 10 estados con mayor impacto (casos + muertes) se muestran con colores distintivos. 
-        El tamaño de cada punto representa el volumen de casos. Estados sobre la diagonal imaginaria tienen mayor mortalidad relativa.
+        Comparación en escala logarítmica. Los 10 estados con mayor impacto (casos + muertes) se muestran con colores distintivos. 
+        Línea punteada muestra la tasa de mortalidad promedio nacional.
         """)
-
 st.markdown("---")
 st.markdown("""
 <div style="display: flex; align-items: center; margin-bottom: 10px;">
