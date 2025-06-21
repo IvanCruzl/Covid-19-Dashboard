@@ -16,12 +16,14 @@ st.title("COVID-19 en Estados Unidos")
 
 
 # Cargar datos
-df = pd.read_csv("us_covid_data2 (2).csv")
-#try:
- #   df = pd.read_csv("us_covid_data2 (2).csv")
-#except FileNotFoundError:
- #   st.error("⚠️ No se encontró el archivo 'us_covid_data.csv'. Asegúrate de que esté en la misma carpeta.")
-  #  st.stop()
+try:
+    df = pd.read_csv("us_covid_data2 (2).csv")  # Intenta en el directorio actual
+except FileNotFoundError:
+    try:
+        # Intenta con la ruta relativa desde GitHub
+        df = pd.read_csv("https://github.com/IvanCruzl/Covid-19-Dashboard/blob/main/us_covid_data.csv")
+    except Exception as e:
+        st.error(f"⚠️ Error al cargar datos: {str(e)}")
 
 # Procesamiento inicial
 df['date'] = pd.to_datetime(df['date'])
